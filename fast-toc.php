@@ -1,21 +1,29 @@
 <?php
 /*
 Plugin Name: Fast TOC
+Description: Display a table of content
+Version: 20200105
+Author: Michiel van Eerd
+Author URI: https://www.michielvaneerd.nl/
+License: GPL2
 */
+
+define('FAST_TOC_PLUGIN_VERSION', '20200105');
 
 add_action('wp_enqueue_scripts', function() {
     if (is_singular()) {
 
-        wp_enqueue_script('mve_toc', plugin_dir_url(__FILE__) . 'toc.js');
+        wp_enqueue_script('mve_toc', plugin_dir_url(__FILE__) . 'toc.js', [], FAST_TOC_PLUGIN_VERSION);
+        $showToc = get_post_meta(get_the_ID(), 'mve_show_toc', true);
         $jsVar = [
-            'show_toc' => get_post_meta(get_the_ID(), 'mve_show_toc', true) === 'true' ? true : false,
+            'show_toc' => $showToc !== '' ? ($showToc === 'true' ? true : false) : (get_option('fast_toc_enabled') == 1 ? true : false),
             'root_selector' => get_option('fast_toc_root_selector'),
             'title' => get_option('fast_toc_title'),
             'fast_toc_selector_ignore' => get_option('fast_toc_selector_ignore')
         ];
         wp_add_inline_script('mve_toc', 'window.MVE_FAST_TOC=' . json_encode($jsVar) . ';', 'before');
 
-        wp_enqueue_style('mve_toc', plugin_dir_url(__FILE__) . 'toc.css');
+        wp_enqueue_style('mve_toc', plugin_dir_url(__FILE__) . 'toc.css', [], FAST_TOC_PLUGIN_VERSION);
     }
 });
 
