@@ -20,7 +20,7 @@ add_action('wp_enqueue_scripts', function() {
 
 add_action('init', function() {
 
-    register_post_meta('post', 'mve_show_toc', array(
+    register_post_meta('', 'mve_show_toc', array(
         'show_in_rest' => true,
         'single' => true,
         'type' => 'string', // 'true' or 'false' as strings, empty string means not set yet
