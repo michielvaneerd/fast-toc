@@ -1,0 +1,33 @@
+.fast-toc {
+    padding: 1em;
+    margin: 0 0 1em 0;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.fast-toc-title {
+    margin-bottom: 1em;
+}
+
+.fast-toc ul {
+    padding:0;
+    margin:0;
+    list-style-type: none;
+}
+
+.fast-toc li {
+    padding: 0;
+    margin: 0;
+}
+
+li.fast-toc-h2 {
+    margin-left: 1em;
+}
+
+li.fast-toc-h3 {
+    margin-left: 2em;
+}
+
+li.fast-toc-h4 {
+    margin-left: 3em;
+}
