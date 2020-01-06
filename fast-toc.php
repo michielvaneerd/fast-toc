@@ -5,6 +5,8 @@ Description: Display a table of content
 Version: 20200105
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
+Requires at least: 5
+Requires PHP: 5.4.0
 License: GPL2
 */
 
