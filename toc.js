@@ -1,17 +1,17 @@
 window.addEventListener("DOMContentLoaded", function() {
-    if (MVE_FAST_TOC && MVE_FAST_TOC.show_toc) {
+    if (FAST_TOC && FAST_TOC.show_toc) {
 
-        var root = MVE_FAST_TOC.root_selector ? document.querySelector(MVE_FAST_TOC.root_selector) : document.body;
+        var root = FAST_TOC.root_selector ? document.querySelector(FAST_TOC.root_selector) : document.body;
 
-        if (MVE_FAST_TOC.selector_ignore) {
-            root.querySelectorAll(MVE_FAST_TOC.selector_ignore).forEach(function(h) {
+        if (FAST_TOC.selector_ignore) {
+            root.querySelectorAll(FAST_TOC.selector_ignore).forEach(function(h) {
                 h.setAttribute("data-fast-toc-ignore", "true");
             });
         }
 
         var list = [];
-        if (MVE_FAST_TOC.title) {
-            list.push("<div class='fast-toc-title'>" + MVE_FAST_TOC.title + "</div>");
+        if (FAST_TOC.title) {
+            list.push("<div class='fast-toc-title'>" + FAST_TOC.title + "</div>");
         }
         var hCounter = 0;
         list.push("<ul>");
@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", function() {
         });
         list.push("</ul>");
 
-        if (hCounter === 0 || MVE_FAST_TOC.minimal_header_count && MVE_FAST_TOC.minimal_header_count > hCounter) {
+        if (hCounter === 0 || FAST_TOC.minimal_header_count && FAST_TOC.minimal_header_count > hCounter) {
             return;
         }
 

@@ -7,9 +7,9 @@ import { useCallback } from '@wordpress/element';
 const PluginDocumentSettingPanelDemo = () => {
 
     const {showToc} = useSelect((select) => {
-        const value = select("core/editor").getEditedPostAttribute("meta")["mve_show_toc"];
+        const value = select("core/editor").getEditedPostAttribute("meta")["fast_toc_show_toc"];
         return {
-            showToc: value !== "" ? (value === "true") : (window.MVE_FAST_TOC_ENABLED == 1)
+            showToc: value !== "" ? (value === "true") : (window.FAST_TOC_ENABLED == 1)
         };
     }, []);
 
@@ -17,7 +17,7 @@ const PluginDocumentSettingPanelDemo = () => {
     const onTocChange = useCallback((newValue) => {
         editPost({
             meta: {
-                mve_show_toc: newValue ? "true" : "false"
+                fast_toc_show_toc: newValue ? "true" : "false"
             }
         });
       }, [editPost]);
