@@ -1,6 +1,10 @@
 window.addEventListener("DOMContentLoaded", function() {
     if (FAST_TOC && FAST_TOC.show_toc) {
 
+        FAST_TOC.onListTypeChange = function(el) {
+            console.log(el);
+        };
+
         var root = FAST_TOC.root_selector ? document.querySelector(FAST_TOC.root_selector) : document.body;
 
         if (FAST_TOC.selector_ignore) {
@@ -17,14 +21,43 @@ window.addEventListener("DOMContentLoaded", function() {
         var hCounter = 0;
         var headers = root.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
-        var listNodeName = FAST_TOC.ordered ? "ol" : "ul"
+        var listClassName = [];
 
-        if (FAST_TOC.collapsible) {
+        if (FAST_TOC.show_counter) {
+            listClassName.push("fast-toc-show-counter");
+        }
+
+        if (FAST_TOC.list_type === "flat") {
+
+            // Simple, works always
+            var levelStart = null;
+            list.push("<ol class='" + listClassName.join(" ") + "'>");
+            headers.forEach(function(h, index) {
+                
+                if (h.getAttribute('data-fast-toc-ignore')) return;
+
+                var id = "fh-" + index;
+                var level = parseInt(h.nodeName.substr(1), 10);
+                if (index === 0) {
+                    levelStart = level;
+                }
+
+                list.push("<li class='fast-toc-" + (level - levelStart) + "'><a href='#" + id + "'>" + h.innerText + "</a></li>");
+                h.setAttribute("id", id);
+                hCounter += 1;
+            });
+            list.push("</ol>");
+
+        } else {
+
+            if (FAST_TOC.list_type === "collapsible") {
+                listClassName.push("fast-toc-collapsible");
+            }
 
             var currentLevel = null;
             var lastLevel = null;
 
-            list.push("<" + listNodeName + " class='fast-toc-collapsible'>");
+            list.push("<ol class='" + listClassName.join(" ") + "'>");
             // Make nested list, only works for correct hierarchy of headers
             
             headers.forEach(function(h, index) {
@@ -40,9 +73,9 @@ window.addEventListener("DOMContentLoaded", function() {
 
                 if (lastLevel !== null) {
                     if (currentLevel > lastLevel) {
-                        list.push("<" + listNodeName + ">"); // TODO: multiply for bigger steps in level?
+                        list.push("<ol>"); // TODO: multiply for bigger steps in level?
                     } else if (currentLevel < lastLevel) {
-                        list.push("</" + listNodeName + "></li>"); // TODO: multiply for bigger steps in level?
+                        list.push("</ol></li>"); // TODO: multiply for bigger steps in level?
                     } else {
                         list.push("</li>");
                     }
@@ -52,27 +85,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 hCounter += 1;
             });
 
-            list.push("</" + listNodeName + ">");
-
-        } else {
-            // Simple, works always
-            var levelStart = null;
-            list.push("<ul>");
-            headers.forEach(function(h, index) {
-                
-                if (h.getAttribute('data-fast-toc-ignore')) return;
-
-                var id = "fh-" + index;
-                var level = parseInt(h.nodeName.substr(1), 10);
-                if (index === 0) {
-                    levelStart = level;
-                }
-
-                list.push("<li class='fast-toc-" + (level - levelStart) + "'><a href='#" + id + "'>" + h.innerText + "</a></li>");
-                h.setAttribute("id", id);
-                hCounter += 1;
-            });
-            list.push("</ul>");
+            list.push("</ol>");
         }
 
         if (hCounter === 0 || FAST_TOC.minimal_header_count && FAST_TOC.minimal_header_count > hCounter) {
