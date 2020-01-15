@@ -19,22 +19,26 @@
     margin: 0;
 }
 
-li.fast-toc-h2 {
+.fast-toc li ul {
     margin-left: 1em;
 }
 
-li.fast-toc-h3 {
+li.fast-toc-1 {
+    margin-left: 1em;
+}
+
+li.fast-toc-2 {
     margin-left: 2em;
 }
 
-li.fast-toc-h4 {
+li.fast-toc-3 {
     margin-left: 3em;
 }
 
-li.fast-toc-h5 {
+li.fast-toc-4 {
     margin-left: 4em;
 }
 
-li.fast-toc-h6 {
+li.fast-toc-5 {
     margin-left: 5em;
 }
