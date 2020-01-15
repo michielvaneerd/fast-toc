@@ -183,3 +183,22 @@ add_action('admin_init', function() {
     }
     
 });
+
+if (is_admin()) {
+    $plugin = plugin_basename(__FILE__);
+    add_filter('plugin_action_links_' . $plugin, 'fast_toc_add_plugin_settings_links');
+    add_filter('network_admin_plugin_action_links_' . $plugin, 'fast_toc_add_plugin_settings_links');
+}
+  
+function fast_toc_add_plugin_settings_links($links) {
+    if (!is_network_admin()) {
+        $link = '<a href="' . admin_url('options-reading.php') . '">'.__('Plugin settings').'</a>';
+        array_unshift($links, $link);
+    } else {
+        // switch_to_blog(1);
+        $link = '<a href="' . admin_url('options-reading.php').'">' . __('Plugin settings').'</a>';
+        // restore_current_blog();
+        array_unshift($links, $link);
+    }
+    return $links;
+}

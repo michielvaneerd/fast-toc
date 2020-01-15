@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", function() {
             
             if (h.getAttribute('data-fast-toc-ignore')) return;
 
-            var id = "fast-toc-" + index;
+            var id = "fh-" + index;
             list.push("<li class='fast-toc-" + h.nodeName.toLocaleLowerCase() + "'><a href='#" + id + "'>" + h.innerText + "</a></li>");
             h.setAttribute("id", id);
             hCounter += 1;

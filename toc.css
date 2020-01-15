@@ -2,7 +2,6 @@
     padding: 1em;
     margin: 0 0 1em 0;
     background-color: white;
-    border: 1px solid black;
 }
 
 .fast-toc-title {
@@ -30,4 +29,12 @@ li.fast-toc-h3 {
 
 li.fast-toc-h4 {
     margin-left: 3em;
+}
+
+li.fast-toc-h5 {
+    margin-left: 4em;
+}
+
+li.fast-toc-h6 {
+    margin-left: 5em;
 }
