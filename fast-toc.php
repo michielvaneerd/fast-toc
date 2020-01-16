@@ -211,7 +211,8 @@ add_action('admin_init', function() {
                 <?php
                 foreach ([
                     ['regular', 'Regular'],
-                    ['collapsible', 'Collapsible'],
+                    ['collapsible_collapsed', 'Collapsible - default collapsed'],
+                    ['collapsible_expanded', 'Collapsible - default expanded'],
                     ['flat', 'Flat', 'Use this option if the hierarchy of the headers is incorrect.']
                 ] as $item) {
                     ?>

@@ -1,10 +1,6 @@
 window.addEventListener("DOMContentLoaded", function() {
     if (FAST_TOC && FAST_TOC.show_toc) {
 
-        FAST_TOC.onListTypeChange = function(el) {
-            console.log(el);
-        };
-
         var root = FAST_TOC.root_selector ? document.querySelector(FAST_TOC.root_selector) : document.body;
 
         if (FAST_TOC.selector_ignore) {
@@ -21,7 +17,7 @@ window.addEventListener("DOMContentLoaded", function() {
         var hCounter = 0;
         var headers = root.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
-        var listClassName = [];
+        var listClassName = ["fast-toc-root-list"];
 
         if (FAST_TOC.show_counter) {
             listClassName.push("fast-toc-show-counter");
@@ -50,14 +46,35 @@ window.addEventListener("DOMContentLoaded", function() {
 
         } else {
 
-            if (FAST_TOC.list_type === "collapsible") {
+            var listClickHandler = "";
+
+            listClassName.push("fast-toc-" + FAST_TOC.list_type);
+
+            if (FAST_TOC.list_type.indexOf("collapsible_") === 0) {
                 listClassName.push("fast-toc-collapsible");
+                listClickHandler = "onclick='FAST_TOC.onListItemClick(event);' onkeypress='FAST_TOC.onListItemClick(event);'";
+
+                FAST_TOC.onListItemClick = function(e) {
+                    console.log(e);
+                    if (e.target.nodeName.toLowerCase() === "li") {
+                        e.preventDefault();
+                        var li = e.target;
+                        if (li.classList.contains("fast-toc-has-child-list")) {
+                            if (li.classList.contains("fast-toc-expanded")) {
+                                li.classList.remove("fast-toc-expanded");
+                            } else {
+                                li.classList.add("fast-toc-expanded");
+                            }
+                        }
+                    }
+                };
+
             }
 
             var currentLevel = null;
             var lastLevel = null;
 
-            list.push("<ol class='" + listClassName.join(" ") + "'>");
+            list.push("<ol " + listClickHandler + " class='" + listClassName.join(" ") + "'>");
             // Make nested list, only works for correct hierarchy of headers
             
             headers.forEach(function(h, index) {
@@ -73,13 +90,21 @@ window.addEventListener("DOMContentLoaded", function() {
 
                 if (lastLevel !== null) {
                     if (currentLevel > lastLevel) {
-                        list.push("<ol>"); // TODO: multiply for bigger steps in level?
+                        var levelDiff = currentLevel - lastLevel;
+                        list.push(list.pop().replace("<li>", "<li tabindex='0' class='fast-toc-has-child-list " + (FAST_TOC.list_type === "collapsible_expanded" ? "fast-toc-expanded" : "") + "'>"));
+                        for (var i = 0; i < levelDiff; i++) {
+                            list.push("<ol>");
+                        }
                     } else if (currentLevel < lastLevel) {
-                        list.push("</ol></li>"); // TODO: multiply for bigger steps in level?
+                        var levelDiff = lastLevel - currentLevel;
+                        for (var i = 0; i < levelDiff; i++) {
+                            list.push("</ol></li>");
+                        }
                     } else {
                         list.push("</li>");
                     }
                 }
+
                 list.push("<li><a href='#" + id + "'>" + h.innerText + "</a>");
                 
                 hCounter += 1;
