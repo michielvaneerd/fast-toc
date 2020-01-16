@@ -63,7 +63,7 @@ ol.fast-toc-show-counter, ol.fast-toc-show-counter ol {
   
 ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before {
     counter-increment: section;
-    content: counters(section, ".") " ";
+    content: counter(section, decimal-leading-zero) " ";
     font-family: monospace;
 }
 
@@ -87,21 +87,22 @@ ol.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol
 
 ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before {
     counter-increment: section;
-    content: "\00a0\00a0" counters(section, ".") " ";
+    content: "\00a0\00a0" counter(section, decimal-leading-zero) " ";
     font-family: monospace;
 }
 
 
 ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before {
     counter-increment: section;
-    content: "+ " counters(section, ".") " ";
+    content: "+ " counter(section, decimal-leading-zero) " ";
     font-family: monospace;
     cursor: pointer;
 }
 
 ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before {
     counter-increment: section;
-    content: "- " counters(section, ".") " ";
+    /* content: "- " counters(section, ".") " "; */
+    content: "- " counter(section, decimal-leading-zero) " ";
     font-family: monospace;
     cursor: pointer;
 }
