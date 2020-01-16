@@ -28,6 +28,9 @@ This plugin displays a table of contents for the selected post types.
 
 == Changelog ==
 
+= 20200116 =
+* Many settings have been added (collapsible, numbers, etc.).
+
 = 20200111 =
 * Select post types, minimum headers and headers to ignore
 

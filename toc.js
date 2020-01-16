@@ -1,6 +1,20 @@
 window.addEventListener("DOMContentLoaded", function() {
     if (FAST_TOC && FAST_TOC.show_toc) {
 
+        var fastTocDiv = null;
+
+        FAST_TOC.onListCollapserClick = function(e) {
+            e.preventDefault();
+            var el = e.target;
+            if (fastTocDiv.classList.contains("fast-toc-collapsed")) {
+                el.innerText = "-";
+                fastTocDiv.classList.remove("fast-toc-collapsed");
+            } else {
+                el.innerText = "+";
+                fastTocDiv.classList.add("fast-toc-collapsed");
+            }
+        };
+
         var root = FAST_TOC.root_selector ? document.querySelector(FAST_TOC.root_selector) : document.body;
 
         if (FAST_TOC.selector_ignore) {
@@ -23,39 +37,40 @@ window.addEventListener("DOMContentLoaded", function() {
             listClassName.push("fast-toc-show-counter");
         }
 
-        if (FAST_TOC.list_type === "flat") {
+        //if (FAST_TOC.list_type === "flat") {
 
-            // Simple, works always
-            var levelStart = null;
-            list.push("<ol class='" + listClassName.join(" ") + "'>");
-            headers.forEach(function(h, index) {
+            // // Simple, works always
+            // var levelStart = null;
+            // list.push("<ol class='" + listClassName.join(" ") + "'>");
+            // headers.forEach(function(h, index) {
                 
-                if (h.getAttribute('data-fast-toc-ignore')) return;
+            //     if (h.getAttribute('data-fast-toc-ignore')) return;
 
-                var id = "fh-" + index;
-                var level = parseInt(h.nodeName.substr(1), 10);
-                if (index === 0) {
-                    levelStart = level;
-                }
+            //     var id = "fh-" + index;
+            //     var level = parseInt(h.nodeName.substr(1), 10);
+            //     if (index === 0) {
+            //         levelStart = level;
+            //     }
 
-                list.push("<li class='fast-toc-" + (level - levelStart) + "'><a href='#" + id + "'>" + h.innerText + "</a></li>");
-                h.setAttribute("id", id);
-                hCounter += 1;
-            });
-            list.push("</ol>");
+            //     list.push("<li class='fast-toc-" + (level - levelStart) + "'><a href='#" + id + "'>" + h.innerText + "</a></li>");
+            //     h.setAttribute("id", id);
+            //     hCounter += 1;
+            // });
+            // list.push("</ol>");
 
-        } else {
+        //} else {
 
             var listClickHandler = "";
 
             listClassName.push("fast-toc-" + FAST_TOC.list_type);
 
-            if (FAST_TOC.list_type.indexOf("collapsible_") === 0) {
+            var listItemsCollapsible = FAST_TOC.list_type.indexOf("collapsible_") === 0;
+
+            if (listItemsCollapsible) {
                 listClassName.push("fast-toc-collapsible");
                 listClickHandler = "onclick='FAST_TOC.onListItemClick(event);' onkeypress='FAST_TOC.onListItemClick(event);'";
 
                 FAST_TOC.onListItemClick = function(e) {
-                    console.log(e);
                     if (e.target.nodeName.toLowerCase() === "li") {
                         e.preventDefault();
                         var li = e.target;
@@ -91,7 +106,8 @@ window.addEventListener("DOMContentLoaded", function() {
                 if (lastLevel !== null) {
                     if (currentLevel > lastLevel) {
                         var levelDiff = currentLevel - lastLevel;
-                        list.push(list.pop().replace("<li>", "<li tabindex='0' class='fast-toc-has-child-list " + (FAST_TOC.list_type === "collapsible_expanded" ? "fast-toc-expanded" : "") + "'>"));
+                        var tabIndex = listItemsCollapsible ? "tabindex='0'" : "";
+                        list.push(list.pop().replace("<li>", "<li " + tabIndex + " class='fast-toc-has-child-list " + (FAST_TOC.list_type === "collapsible_expanded" ? "fast-toc-expanded" : "") + "'>"));
                         for (var i = 0; i < levelDiff; i++) {
                             list.push("<ol>");
                         }
@@ -111,16 +127,25 @@ window.addEventListener("DOMContentLoaded", function() {
             });
 
             list.push("</ol>");
-        }
+        //}
 
         if (hCounter === 0 || FAST_TOC.minimal_header_count && FAST_TOC.minimal_header_count > hCounter) {
             return;
         }
 
-        var el = document.createElement("div");
-        el.className = "fast-toc";
-        el.innerHTML = list.join("\n");
-        root.insertBefore(el, root.firstChild);
+        fastTocDiv = document.createElement("div");
+        fastTocDiv.classList.add("fast-toc");
+        if (FAST_TOC.collapsible !== "not_collapsible") {
+            var collapsibleChar = "-";
+            if (FAST_TOC.collapsible === "collapsible_collapsed") {
+                fastTocDiv.classList.add("fast-toc-collapsed");
+                collapsibleChar = "+";
+            }
+            fastTocDiv.innerHTML = "<a onkeypress='FAST_TOC.onListCollapserClick(event);' onclick='FAST_TOC.onListCollapserClick(event);' class='fast-toc-list-collapser' tabindex='0'>" + collapsibleChar + "</a>" + list.join("\n");
+        } else {
+            fastTocDiv.innerHTML = list.join("\n");
+        }
+        root.insertBefore(fastTocDiv, root.firstChild);
     }
 
 });

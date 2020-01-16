@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20200111
+Version: 20200116
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,7 +10,7 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20200111');
+define('FAST_TOC_PLUGIN_VERSION', '20200116');
 
 define('FAST_TOC_DEFAULTS', [
     'fast_toc_root_selector' => 'body',
@@ -18,7 +18,8 @@ define('FAST_TOC_DEFAULTS', [
     'fast_toc_list_type' => 'regular',
     'fast_toc_enabled_default' => 1,
     'fast_toc_post_types' => [],
-    'fast_toc_show_counter' => 0
+    'fast_toc_show_counter' => 0,
+    'fast_toc_collapsible' => 'collapsible_expanded'
 ]);
 
 function fast_toc_get_option($option) {
@@ -39,7 +40,8 @@ add_action('wp_enqueue_scripts', function() {
                 'selector_ignore' => fast_toc_get_option('fast_toc_selector_ignore'),
                 'minimal_header_count' => fast_toc_get_option('fast_toc_minimal_header_count'),
                 'list_type' => fast_toc_get_option('fast_toc_list_type'),
-                'show_counter' => fast_toc_get_option('fast_toc_show_counter')
+                'show_counter' => fast_toc_get_option('fast_toc_show_counter'),
+                'collapsible' => fast_toc_get_option('fast_toc_collapsible')
             ];
             wp_add_inline_script('fast_toc', 'window.FAST_TOC=' . json_encode($jsVar) . ';', 'before');
 
@@ -95,6 +97,7 @@ add_action('admin_init', function() {
     register_setting('reading', 'fast_toc_minimal_header_count');
     register_setting('reading', 'fast_toc_list_type');
     register_setting('reading', 'fast_toc_show_counter');
+    register_setting('reading', 'fast_toc_collapsible');
 
     if ($pagenow === "options-reading.php") {
 
@@ -203,17 +206,17 @@ add_action('admin_init', function() {
 
         add_settings_field(
             'fast_toc_list_type',
-            'List type',
+            'TOC items',
             function() {
                 $setting = fast_toc_get_option('fast_toc_list_type');
                 ?>
                 <fieldset>
                 <?php
                 foreach ([
-                    ['regular', 'Regular'],
-                    ['collapsible_collapsed', 'Collapsible - default collapsed'],
-                    ['collapsible_expanded', 'Collapsible - default expanded'],
-                    ['flat', 'Flat', 'Use this option if the hierarchy of the headers is incorrect.']
+                    ['regular', 'Not collapsible'],
+                    ['collapsible_collapsed', 'Collapsible items - by default items are collapsed'],
+                    ['collapsible_expanded', 'Collapsible items - by default items are expanded'],
+                    //['flat', 'Flat', 'Use this option if the hierarchy of the headers is incorrect.']
                 ] as $item) {
                     ?>
                     <p>
@@ -240,6 +243,36 @@ add_action('admin_init', function() {
         );
 
         add_settings_field(
+            'fast_toc_collapsible',
+            'TOC list',
+            function() {
+                $setting = fast_toc_get_option('fast_toc_collapsible');
+                ?>
+                <fieldset>
+                <?php
+                foreach ([
+                    ['not_collapsible', 'Not collapsible'],
+                    ['collapsible_collapsed', 'Collapsible TOC - by default TOC is collapsed'],
+                    ['collapsible_expanded', 'Collapsible TOC - by default TOC is expanded']
+                ] as $item) {
+                    ?>
+                    <p>
+                    <label>
+                        <input <?php checked($setting, $item[0]); ?> type="radio" name="fast_toc_collapsible" value="<?php echo esc_attr($item[0]); ?>">
+                        <?php echo esc_html($item[1]); ?>
+                    </label>
+                    </p>
+                    <?php
+                }
+                ?>
+                </fieldset>
+                <?php
+            },
+            'reading',
+            'fast_toc_settings_section'
+        );
+
+        add_settings_field(
             'fast_toc_show_counter',
             'Show numbers',
             function() {
@@ -248,7 +281,7 @@ add_action('admin_init', function() {
                 <fieldset>
                 <label>
                 <input id="fast_toc_show_counter" type="checkbox" name="fast_toc_show_counter" <?php checked($setting, '1'); ?> value="1">
-                Show numbers
+                Show header numbers
                 </label>
                 </fieldset>
                 <?php

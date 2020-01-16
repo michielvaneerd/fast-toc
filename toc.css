@@ -2,6 +2,7 @@
     padding: 1em;
     margin: 0 0 1em 0;
     background-color: white;
+    position: relative;
 }
 
 .fast-toc a {
@@ -10,6 +11,10 @@
 
 .fast-toc-title {
     margin-bottom: 1em;
+}
+
+.fast-toc.fast-toc-collapsed .fast-toc-title {
+    margin-bottom: 0;
 }
 
 .fast-toc ol.fast-toc-root-list, .fast-toc ol.fast-toc-root-list ol {
@@ -52,7 +57,7 @@ ol.fast-toc-show-counter, ol.fast-toc-show-counter ol {
     list-style-type: none;
 }
 
-.fast-toc ol.fast-toc-root-list li::before {
+.fast-toc ol.fast-toc-root-list li::before, .fast-toc-list-collapser {
     color: #6d6d6d;
 }
   
@@ -107,4 +112,16 @@ ol.fast-toc-collapsible li > ol {
 
 ol.fast-toc-collapsible li.fast-toc-expanded > ol {
     display: block;
+}
+
+.fast-toc-list-collapser {
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+.fast-toc.fast-toc-collapsed > ol {
+    display: none;
 }
