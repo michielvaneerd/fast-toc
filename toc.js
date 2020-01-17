@@ -1,6 +1,65 @@
 window.addEventListener("DOMContentLoaded", function() {
     if (FAST_TOC && FAST_TOC.show_toc) {
 
+        var styleSheet = null;
+
+        var addCSSRule = function(selector, rules) {
+            if ("insertRule" in styleSheet) {
+                styleSheet.insertRule(selector + "{" + rules + "}", styleSheet.rules.length);
+            }
+            else if ("addRule" in styleSheet) {
+                styleSheet.addRule(selector, rules, styleSheet.rules.length);
+            }
+        };
+
+        for (var i = 0; i < document.styleSheets.length; i++) {
+            if (document.styleSheets[i].href && document.styleSheets[i].href.indexOf("/toc.css") !== -1) {
+                styleSheet = document.styleSheets[i];
+                break;
+            }
+        }
+
+        if (FAST_TOC.show_counter) {
+            var cssCounterStyle = FAST_TOC.counter_style;
+            var cssCounterNesting = FAST_TOC.nested_items;
+            var cssCounterNestingSeparator = FAST_TOC.item_separator;
+            if (FAST_TOC.list_type === "regular") {
+                
+                    if (cssCounterNesting) {
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before",
+                            'content: counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                    } else {
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before",
+                            'content: counter(section, ' + cssCounterStyle + ') " ";');
+                    }
+                } else {
+                    if (cssCounterNesting) {
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before",
+                            'content: "\\00a0\\00a0" counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before",
+                            'content: "+ " counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before",
+                            'content: "- " counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                    } else {
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before",
+                            'content: "\\00a0\\00a0" counter(section, ' + cssCounterStyle + ') " ";');
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before",
+                            'content: "+ " counter(section, ' + cssCounterStyle + ') " ";');
+                        addCSSRule(
+                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before",
+                            'content: "- " counter(section, ' + cssCounterStyle + ') " ";');
+                    }
+            }
+        }
+        
+
         var fastTocDiv = null;
 
         FAST_TOC.onListCollapserClick = function(e) {

@@ -19,7 +19,10 @@ define('FAST_TOC_DEFAULTS', [
     'fast_toc_enabled_default' => 1,
     'fast_toc_post_types' => [],
     'fast_toc_show_counter' => 0,
-    'fast_toc_collapsible' => 'collapsible_expanded'
+    'fast_toc_collapsible' => 'collapsible_expanded',
+    'fast_toc_item_separator' => '.',
+    'fast_toc_nested_items' => 0,
+    'fast_toc_counter_style' => 'decimal-leading-zero'
 ]);
 
 function fast_toc_get_option($option) {
@@ -41,7 +44,10 @@ add_action('wp_enqueue_scripts', function() {
                 'minimal_header_count' => fast_toc_get_option('fast_toc_minimal_header_count'),
                 'list_type' => fast_toc_get_option('fast_toc_list_type'),
                 'show_counter' => fast_toc_get_option('fast_toc_show_counter'),
-                'collapsible' => fast_toc_get_option('fast_toc_collapsible')
+                'collapsible' => fast_toc_get_option('fast_toc_collapsible'),
+                'nested_items' => fast_toc_get_option('fast_toc_nested_items'),
+                'item_separator' => fast_toc_get_option('fast_toc_item_separator'),
+                'counter_style' => fast_toc_get_option('fast_toc_counter_style')
             ];
             wp_add_inline_script('fast_toc', 'window.FAST_TOC=' . json_encode($jsVar) . ';', 'before');
 
@@ -98,6 +104,9 @@ add_action('admin_init', function() {
     register_setting('reading', 'fast_toc_list_type');
     register_setting('reading', 'fast_toc_show_counter');
     register_setting('reading', 'fast_toc_collapsible');
+    register_setting('reading', 'fast_toc_nested_items');
+    register_setting('reading', 'fast_toc_item_separator');
+    register_setting('reading', 'fast_toc_counter_style');
 
     if ($pagenow === "options-reading.php") {
 
@@ -196,7 +205,7 @@ add_action('admin_init', function() {
             function() {
                 $setting = fast_toc_get_option('fast_toc_minimal_header_count');
                 ?>
-                <input min="1" id="fast_toc_minimal_header_count" type="number" name="fast_toc_minimal_header_count" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+                <input class="small-text" min="1" id="fast_toc_minimal_header_count" type="number" name="fast_toc_minimal_header_count" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
                 <p class="description">Show the TOC only when there are at least this number of headers.</p>
                 <?php
             },
@@ -284,6 +293,52 @@ add_action('admin_init', function() {
                 Show header numbers
                 </label>
                 </fieldset>
+                <?php
+            },
+            'reading',
+            'fast_toc_settings_section'
+        );
+
+        add_settings_field(
+            'fast_toc_counter_style',
+            '<label for="fast_toc_counter_style">Number style</label>',
+            function() {
+                $setting = fast_toc_get_option('fast_toc_counter_style');
+                ?>
+                <input id="fast_toc_counter_style" type="text" name="fast_toc_counter_style" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+                <?php
+            },
+            'reading',
+            'fast_toc_settings_section'
+        );
+
+        add_settings_field(
+            'fast_toc_nested_items',
+            'Nested header numbers',
+            function() {
+                $setting = fast_toc_get_option('fast_toc_nested_items');
+                ?>
+                <fieldset>
+                <label>
+                <input id="fast_toc_nested_items" type="checkbox" name="fast_toc_nested_items" <?php checked($setting, '1'); ?> value="1">
+                Display nested header numbers
+                </label>
+                <p class="description">For example 1.2, 1.2.1</p>
+                </fieldset>
+                <?php
+            },
+            'reading',
+            'fast_toc_settings_section'
+        );
+
+        add_settings_field(
+            'fast_toc_item_separator',
+            '<label for="fast_toc_item_separator">Nested header separator</label>',
+            function() {
+                $setting = fast_toc_get_option('fast_toc_item_separator');
+                ?>
+                <input class="small-text" id="fast_toc_item_separator" type="text" name="fast_toc_item_separator" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+                <p class="description">The separator between nested header numbers, for example 1.2 or 1/2.</p>
                 <?php
             },
             'reading',

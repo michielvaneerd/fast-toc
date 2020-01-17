@@ -66,6 +66,12 @@ ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.f
     counter-increment: section;
     content: counter(section, decimal-leading-zero) " ";
     font-family: monospace;
+    /*
+    text-align: right;
+    display: inline-block;
+    width: 60px;
+    margin-right: 10px;
+    */
 }
 
 ol.fast-toc-collapsible li::before, ol.fast-toc-collapsible ol li::before {
@@ -86,13 +92,14 @@ ol.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol
     cursor: pointer;
 }
 
+/* Show numbers and collapsible - without child */
 ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before {
     counter-increment: section;
     content: "\00a0\00a0" counter(section, decimal-leading-zero) " ";
     font-family: monospace;
 }
 
-
+/* Show numbers and collapsible - with child - collapsed */
 ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before {
     counter-increment: section;
     content: "+ " counter(section, decimal-leading-zero) " ";
@@ -100,6 +107,7 @@ ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before
     cursor: pointer;
 }
 
+/* Show numbers and collapsible - with child - expanded */
 ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before {
     counter-increment: section;
     content: "- " counter(section, decimal-leading-zero) " ";
