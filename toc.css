@@ -30,6 +30,8 @@
 }
 
 .fast-toc ol.fast-toc-root-list li ol {
+    /* 2em when right alining numbers */
+    /* margin-left: 2em; */
     margin-left: 1em;
 }
 
@@ -68,9 +70,9 @@ ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.f
     font-family: monospace;
     /*
     text-align: right;
-    display: inline-block;
-    width: 60px;
-    margin-right: 10px;
+    display: inline-block; 
+    width: 80px;
+    padding-right: 10px;
     */
 }
 
@@ -97,6 +99,12 @@ ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-count
     counter-increment: section;
     content: "\00a0\00a0" counter(section, decimal-leading-zero) " ";
     font-family: monospace;
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 10rem; 
+    padding-right: 10px;
+    */
 }
 
 /* Show numbers and collapsible - with child - collapsed */
@@ -105,6 +113,13 @@ ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before
     content: "+ " counter(section, decimal-leading-zero) " ";
     font-family: monospace;
     cursor: pointer;
+    /* Right align number, but you have to set it to a high width if you want to match all use cases... */
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 10rem; 
+    padding-right: 10px;
+    */
 }
 
 /* Show numbers and collapsible - with child - expanded */
@@ -113,6 +128,12 @@ ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-to
     content: "- " counter(section, decimal-leading-zero) " ";
     font-family: monospace;
     cursor: pointer;
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 10rem; 
+    padding-right: 10px;
+    */
 }
 
 ol.fast-toc-collapsible li > ol {
