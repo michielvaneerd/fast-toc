@@ -141,7 +141,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 fastTocDiv.classList.add("fast-toc-collapsed");
                 collapsibleChar = "+";
             }
-            fastTocDiv.innerHTML = "<a onkeypress='FAST_TOC.onListCollapserClick(event);' onclick='FAST_TOC.onListCollapserClick(event);' class='fast-toc-list-collapser' tabindex='0'>" + collapsibleChar + "</a>" + list.join("\n");
+            fastTocDiv.innerHTML = "<div onkeypress='FAST_TOC.onListCollapserClick(event);' onclick='FAST_TOC.onListCollapserClick(event);' class='fast-toc-list-collapser' tabindex='0'>" + collapsibleChar + "</div>" + list.join("\n");
         } else {
             fastTocDiv.innerHTML = list.join("\n");
         }

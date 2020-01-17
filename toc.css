@@ -3,6 +3,7 @@
     margin: 0 0 1em 0;
     background-color: white;
     position: relative;
+    overflow: auto;
 }
 
 .fast-toc a {
@@ -101,7 +102,6 @@ ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before
 
 ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before {
     counter-increment: section;
-    /* content: "- " counters(section, ".") " "; */
     content: "- " counter(section, decimal-leading-zero) " ";
     font-family: monospace;
     cursor: pointer;
@@ -116,7 +116,7 @@ ol.fast-toc-collapsible li.fast-toc-expanded > ol {
 }
 
 .fast-toc-list-collapser {
-    position: absolute;
+    float: right;
     right: 1em;
     top: 1em;
     cursor: pointer;
