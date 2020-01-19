@@ -1,19 +1,24 @@
 (function(win) {
 
     var fast_toc_show_counter = document.getElementById("fast_toc_show_counter");
+    var showNumberInputs = ['fast_toc_counter_style', 'fast_toc_nested_items', 'fast_toc_item_separator'];
 
-    win.onListTypeChange = function(el) {
+    win.onShowNumbersChange = function() {
 
-        if (!el) return;
-
-        if (el.value === "flat") {
-            fast_toc_show_counter.checked = false;
-            fast_toc_show_counter.setAttribute("disabled", "disabled");
+        if (!fast_toc_show_counter.checked) {
+            showNumberInputs.forEach(function(key) {
+                //document.getElementById(key).checked = false;
+                document.getElementById(key).setAttribute("disabled", "disabled");
+            });
         } else {
-            fast_toc_show_counter.removeAttribute("disabled");
+            showNumberInputs.forEach(function(key) {
+                //document.getElementById(key).checked = true;
+                document.getElementById(key).removeAttribute("disabled");
+            });
         }
     };
-
-    win.onListTypeChange(document.querySelector("input[name='fast_toc_list_type']:checked"));
+    
+    fast_toc_show_counter.addEventListener("change", win.onShowNumbersChange);
+    win.onShowNumbersChange();
 
 }(window));

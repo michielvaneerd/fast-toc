@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20200116
+Version: 20200119
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,10 +10,9 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20200116');
+define('FAST_TOC_PLUGIN_VERSION', '20200119');
 
 define('FAST_TOC_DEFAULTS', [
-    'fast_toc_root_selector' => 'body',
     'fast_toc_minimal_header_count' => 5,
     'fast_toc_list_type' => 'regular',
     'fast_toc_enabled_default' => 1,
@@ -24,6 +23,10 @@ define('FAST_TOC_DEFAULTS', [
     'fast_toc_nested_items' => 0,
     'fast_toc_counter_style' => 'decimal-leading-zero'
 ]);
+
+add_filter('the_content', function($content) {
+    return '<div id="fast-toc-wrapper">' . $content . '</div>';
+});
 
 function fast_toc_get_option($option) {
     return get_option($option, array_key_exists($option, FAST_TOC_DEFAULTS) ? FAST_TOC_DEFAULTS[$option] : null);
@@ -38,7 +41,6 @@ add_action('wp_enqueue_scripts', function() {
             $showToc = get_post_meta(get_the_ID(), 'fast_toc_show_toc', true);
             $jsVar = [
                 'show_toc' => $showToc !== '' ? ($showToc === 'true' ? true : false) : (fast_toc_get_option('fast_toc_enabled_default') == 1 ? true : false),
-                'root_selector' => fast_toc_get_option('fast_toc_root_selector'),
                 'title' => fast_toc_get_option('fast_toc_title'),
                 'selector_ignore' => fast_toc_get_option('fast_toc_selector_ignore'),
                 'minimal_header_count' => fast_toc_get_option('fast_toc_minimal_header_count'),
@@ -63,6 +65,10 @@ add_action('admin_enqueue_scripts', function($hook) {
 });
 
 add_action('init', function() {
+
+    add_shortcode('fast-toc', function($atts, $content) {
+        return '<div id="fast-toc-toc"></div>';
+    });
 
     $postTypes = fast_toc_get_option('fast_toc_post_types');
     foreach ($postTypes as $postType) {
@@ -95,7 +101,6 @@ add_action('admin_init', function() {
 
     global $pagenow;
 
-    register_setting('reading', 'fast_toc_root_selector');
     register_setting('reading', 'fast_toc_selector_ignore');
     register_setting('reading', 'fast_toc_enabled_default');
     register_setting('reading', 'fast_toc_title');
@@ -156,20 +161,6 @@ add_action('admin_init', function() {
             'reading',
             'fast_toc_settings_section'
         );
-    
-        add_settings_field(
-            'fast_toc_root_selector',
-            '<label for="fast_toc_root_selector">Root selector</label>',
-            function() {
-                $setting = fast_toc_get_option('fast_toc_root_selector');
-                ?>
-                <input id="fast_toc_root_selector" type="text" name="fast_toc_root_selector" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
-                <p class="description">The CSS selector of the root element that wraps all the headers. If this is empty, the root element will be the BODY.</p>
-                <?php
-            },
-            'reading',
-            'fast_toc_settings_section'
-        );
 
         add_settings_field(
             'fast_toc_selector_ignore',
@@ -178,7 +169,7 @@ add_action('admin_init', function() {
                 $setting = fast_toc_get_option('fast_toc_selector_ignore');
                 ?>
                 <input id="fast_toc_selector_ignore" type="text" name="fast_toc_selector_ignore" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
-                <p class="description">The CSS selector of headers that should NOT be added to the TOC. If this is empty, no header inside the root element is ignored.</p>
+                <p class="description">The CSS selector of headers that should NOT be added to the TOC.</p>
                 <?php
             },
             'reading',
@@ -306,6 +297,7 @@ add_action('admin_init', function() {
                 $setting = fast_toc_get_option('fast_toc_counter_style');
                 ?>
                 <input id="fast_toc_counter_style" type="text" name="fast_toc_counter_style" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+                <p class="description">See <a target="_blank" href="https://mdn.github.io/css-examples/counter-style-demo/">available styles</a>.</p>
                 <?php
             },
             'reading',
@@ -314,7 +306,7 @@ add_action('admin_init', function() {
 
         add_settings_field(
             'fast_toc_nested_items',
-            'Nested header numbers',
+            'Nested numbers',
             function() {
                 $setting = fast_toc_get_option('fast_toc_nested_items');
                 ?>
@@ -333,7 +325,7 @@ add_action('admin_init', function() {
 
         add_settings_field(
             'fast_toc_item_separator',
-            '<label for="fast_toc_item_separator">Nested header separator</label>',
+            '<label for="fast_toc_item_separator">Nested number separator</label>',
             function() {
                 $setting = fast_toc_get_option('fast_toc_item_separator');
                 ?>

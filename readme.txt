@@ -28,6 +28,9 @@ This plugin displays a table of contents for the selected post types.
 
 == Changelog ==
 
+= 20200119 =
+* Shortcode [fast-toc] and the_content filter.
+
 = 20200116 =
 * Many settings have been added (collapsible, numbers, etc.).
 
