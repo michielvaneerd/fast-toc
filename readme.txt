@@ -12,13 +12,16 @@ Display a table of contents
 
 == Description ==
 
-This plugin displays a table of contents for the selected post types.
+This plugin displays a table of contents for the selected post types. See [the documentation](https://blog.michielvaneerd.nl/fast-toc/) for more information and an example.
 
 = Features =
 
 * Display table of contents
 * Set default settings (see Settings / Reading section)
 * Specify what headers are ignored with CSS selectors
+* Collapsible or not
+* Specify the list style type
+* Change default position with a shortcode
 
 == Installation ==
 
