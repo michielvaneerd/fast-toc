@@ -31,6 +31,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 
 == Changelog ==
 
+= 20200126 =
+* Nicer id attribute values
+
 = 20200119 =
 * Shortcode [fast-toc] and the_content filter.
 

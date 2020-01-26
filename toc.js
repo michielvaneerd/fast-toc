@@ -127,6 +127,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
         list.push("<ol " + listClickHandler + " class='" + listClassName.join(" ") + "'>");
         // Make nested list, only works for correct hierarchy of headers
+
+        var ids = {};
         
         headers.forEach(function(h, index) {
             
@@ -136,7 +138,14 @@ window.addEventListener("DOMContentLoaded", function() {
             lastLevel = currentLevel;
             currentLevel = level;
 
-            var id = "fh-" + index;
+            var id = h.innerText.replace(" ", "_");
+            var idCounter = 0;
+            while (id in ids) {
+                idCounter += 1;
+                id += idCounter.toString();
+            }
+            ids[id] = true;
+
             h.setAttribute("id", id);
 
             if (lastLevel !== null) {
