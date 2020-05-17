@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20200517
+Version: 20200518
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,7 +10,7 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20200517');
+define('FAST_TOC_PLUGIN_VERSION', '20200518');
 
 define('FAST_TOC_DEFAULTS', [
     'fast_toc_minimal_header_count' => 5,
@@ -46,7 +46,8 @@ add_action('wp_enqueue_scripts', function() {
                 'collapsible' => fast_toc_get_option('fast_toc_collapsible'),
                 'nested_items' => fast_toc_get_option('fast_toc_nested_items'),
                 'item_separator' => fast_toc_get_option('fast_toc_item_separator'),
-                'counter_style' => fast_toc_get_option('fast_toc_counter_style')
+                'counter_style' => fast_toc_get_option('fast_toc_counter_style'),
+                'back_to_top' => fast_toc_get_option('fast_toc_back_to_top'),
             ];
             wp_add_inline_script('fast_toc', 'window.FAST_TOC=' . json_encode($jsVar) . ';', 'before');
 
@@ -116,6 +117,7 @@ add_action('admin_init', function() {
     register_setting('reading', 'fast_toc_nested_items');
     register_setting('reading', 'fast_toc_item_separator');
     register_setting('reading', 'fast_toc_counter_style');
+    register_setting('reading', 'fast_toc_back_to_top');
 
     if ($pagenow === "options-reading.php") {
 
@@ -283,6 +285,24 @@ add_action('admin_init', function() {
                     <?php
                 }
                 ?>
+                </fieldset>
+                <?php
+            },
+            'reading',
+            'fast_toc_settings_section'
+        );
+
+        add_settings_field(
+            'fast_toc_back_to_top',
+            'Back to top',
+            function() {
+                $setting = fast_toc_get_option('fast_toc_back_to_top');
+                ?>
+                <fieldset>
+                <label>
+                <input id="fast_toc_back_to_top" type="checkbox" name="fast_toc_back_to_top" <?php checked($setting, '1'); ?> value="1">
+                Display a back to top link
+                </label>
                 </fieldset>
                 <?php
             },

@@ -31,6 +31,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 
 == Changelog ==
 
+= 20200518 =
+* Add scroll to top link.
+
 = 20200517 =
 * Add root selector.
 * Don't overwrite ID of header if header already has one.

@@ -200,6 +200,40 @@ window.addEventListener("DOMContentLoaded", function() {
         } else {
             root.insertBefore(fastTocDiv, root.firstChild);
         }
+
+        if (FAST_TOC.back_to_top) {
+
+            var winHeight = window.innerHeight;
+            var docEl = document.documentElement;
+
+            var lastScrollTop = null;
+
+            var topArrow = document.createElement("a");
+            topArrow.innerHTML = "↑";
+            topArrow.setAttribute("href", "#top");
+            topArrow.id = "fast-toc-top-arrow";
+            document.body.appendChild(topArrow);
+
+            window.addEventListener("scroll", handleScroll);
+
+            function handleScroll() {
+                if (lastScrollTop === null || docEl.scrollTop === 0) {
+                    lastScrollTop = docEl.scrollTop;
+                }
+
+                if (docEl.scrollTop > winHeight) {
+                    if (docEl.scrollTop < lastScrollTop) {
+                        topArrow.style.display = "block";
+                    }
+                    lastScrollTop = docEl.scrollTop;
+                    return;
+                }
+                topArrow.style.display = "none";
+            }
+
+            handleScroll();
+        }
+
     }
 
 });
