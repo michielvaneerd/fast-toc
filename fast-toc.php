@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20200126
+Version: 20200517
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,7 +10,7 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20200126');
+define('FAST_TOC_PLUGIN_VERSION', '20200517');
 
 define('FAST_TOC_DEFAULTS', [
     'fast_toc_minimal_header_count' => 5,
@@ -23,10 +23,6 @@ define('FAST_TOC_DEFAULTS', [
     'fast_toc_nested_items' => 0,
     'fast_toc_counter_style' => 'decimal-leading-zero'
 ]);
-
-add_filter('the_content', function($content) {
-    return '<div id="fast-toc-wrapper">' . $content . '</div>';
-});
 
 function fast_toc_get_option($option) {
     return get_option($option, array_key_exists($option, FAST_TOC_DEFAULTS) ? FAST_TOC_DEFAULTS[$option] : null);
@@ -43,6 +39,7 @@ add_action('wp_enqueue_scripts', function() {
                 'show_toc' => $showToc !== '' ? ($showToc === 'true' ? true : false) : (fast_toc_get_option('fast_toc_enabled_default') == 1 ? true : false),
                 'title' => fast_toc_get_option('fast_toc_title'),
                 'selector_ignore' => fast_toc_get_option('fast_toc_selector_ignore'),
+                'selector_root' => fast_toc_get_option('fast_toc_selector_root'),
                 'minimal_header_count' => fast_toc_get_option('fast_toc_minimal_header_count'),
                 'list_type' => fast_toc_get_option('fast_toc_list_type'),
                 'show_counter' => fast_toc_get_option('fast_toc_show_counter'),
@@ -69,6 +66,12 @@ add_action('init', function() {
     add_shortcode('fast-toc', function($atts, $content) {
         return '<div id="fast-toc-toc"></div>';
     });
+
+    if (!fast_toc_get_option("fast_toc_selector_root")) {
+        add_filter('the_content', function($content) {
+            return '<div id="fast-toc-wrapper">' . $content . '</div>';
+        });
+    }
 
     $postTypes = fast_toc_get_option('fast_toc_post_types');
     foreach ($postTypes as $postType) {
@@ -101,6 +104,7 @@ add_action('admin_init', function() {
 
     global $pagenow;
 
+    register_setting('reading', 'fast_toc_selector_root');
     register_setting('reading', 'fast_toc_selector_ignore');
     register_setting('reading', 'fast_toc_enabled_default');
     register_setting('reading', 'fast_toc_title');
@@ -156,6 +160,20 @@ add_action('admin_init', function() {
                 </label>
                 <p class="description">You can overrule this per post.</p>
                 </fieldset>
+                <?php
+            },
+            'reading',
+            'fast_toc_settings_section'
+        );
+
+        add_settings_field(
+            'fast_toc_selector_root',
+            '<label for="fast_toc_selector_root">Root selector</label>',
+            function() {
+                $setting = fast_toc_get_option('fast_toc_selector_root');
+                ?>
+                <input id="fast_toc_selector_root" type="text" name="fast_toc_selector_root" value="<?php echo isset( $setting ) ? esc_attr( $setting ) : ''; ?>">
+                <p class="description">CSS selector of the root element that contains all headers. If you leave this blank, your content will be wrapped with a root DIV element.</p>
                 <?php
             },
             'reading',

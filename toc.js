@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", function() {
             }
         };
 
-        var root = document.getElementById("fast-toc-wrapper");
+        var root = FAST_TOC.selector_root ? document.querySelector(FAST_TOC.selector_root) : document.getElementById("fast-toc-wrapper");
 
         if (FAST_TOC.selector_ignore) {
             root.querySelectorAll(FAST_TOC.selector_ignore).forEach(function(h) {
@@ -138,15 +138,19 @@ window.addEventListener("DOMContentLoaded", function() {
             lastLevel = currentLevel;
             currentLevel = level;
 
-            var id = h.innerText.replace(" ", "_");
-            var idCounter = 0;
-            while (id in ids) {
-                idCounter += 1;
-                id += idCounter.toString();
+            var id = null;
+            if (h.id) {
+                id = h.id;
+            } else {
+                id = h.innerText.replace(" ", "_");
+                var idCounter = 0;
+                while (id in ids) {
+                    idCounter += 1;
+                    id += idCounter.toString();
+                }
+                h.setAttribute("id", id);
             }
             ids[id] = true;
-
-            h.setAttribute("id", id);
 
             if (lastLevel !== null) {
                 if (currentLevel > lastLevel) {

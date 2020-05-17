@@ -2,7 +2,7 @@
 Contributors: michielve
 Tags: toc, table of contents
 Requires at least: 5
-Tested up to: 5.4
+Tested up to: 5.4.1
 Requires PHP: 5.4.0
 Stable tag: trunk
 License: GPLv2 or later
@@ -30,6 +30,10 @@ This plugin displays a table of contents for the selected post types. See [the d
 3. Use the Settings->Reading screen to set some default settings.
 
 == Changelog ==
+
+= 20200517 =
+* Add root selector.
+* Don't overwrite ID of header if header already has one.
 
 = 20200126 =
 * Nicer id attribute values
