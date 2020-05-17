@@ -217,14 +217,13 @@ window.addEventListener("DOMContentLoaded", function() {
             window.addEventListener("scroll", handleScroll);
 
             function handleScroll() {
+
                 if (lastScrollTop === null || docEl.scrollTop === 0) {
                     lastScrollTop = docEl.scrollTop;
                 }
 
                 if (docEl.scrollTop > winHeight) {
-                    if (docEl.scrollTop < lastScrollTop) {
-                        topArrow.style.display = "block";
-                    }
+                    topArrow.style.display = docEl.scrollTop < lastScrollTop ? "block" : "none";
                     lastScrollTop = docEl.scrollTop;
                     return;
                 }

@@ -31,6 +31,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 
 == Changelog ==
 
+= 20200519 =
+* When scrolling down, remove scroll to top 
+
 = 20200518 =
 * Add scroll to top link.
 
