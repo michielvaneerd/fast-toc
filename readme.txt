@@ -31,6 +31,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 
 == Changelog ==
 
+= 20200526 =
+* String replace global
+
 = 20200519 =
 * When scrolling down, remove scroll to top 
 

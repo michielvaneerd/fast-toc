@@ -142,7 +142,7 @@ window.addEventListener("DOMContentLoaded", function() {
             if (h.id) {
                 id = h.id;
             } else {
-                id = h.innerText.replace(" ", "_");
+                id = h.innerText.replace(/\s/g, "_");
                 var idCounter = 0;
                 while (id in ids) {
                     idCounter += 1;
