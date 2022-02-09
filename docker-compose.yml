@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db:
-    image: mysql:5.7
+    image: mariadb
     # connect from host with:
     # mysql -hlocalhost -P3306 --protocol=tcp -uwordpress -p
     ports:
@@ -19,7 +19,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:latest
+    image: wordpress
     ports:
       - "8000:80"
     restart: always
@@ -28,7 +28,7 @@ services:
       - wp:/var/www/html
       # This only mounts the current working dir to the WP plugin dir.
       # This means that all other WP files are copied everytime after docker-compose down.
-      - ./:/var/www/html/wp-content/plugins/fast-toc:delegated
+      - ./:/var/www/html/wp-content/plugins/fast-toc
       # Remove dev dirs from the mount.
       - src:/var/www/html/wp-content/plugins/fast-toc/src/
       - node_modules:/var/www/html/wp-content/plugins/fast-toc/node_modules/
