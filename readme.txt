@@ -2,7 +2,7 @@
 Contributors: michielve
 Tags: toc, table of contents
 Requires at least: 5
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.4.0
 Stable tag: trunk
 License: GPLv2 or later
