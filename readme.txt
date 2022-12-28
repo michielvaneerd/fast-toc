@@ -2,7 +2,7 @@
 Contributors: michielve
 Tags: toc, table of contents
 Requires at least: 5
-Tested up to: 6.0
+Tested up to: 6.1.1
 Requires PHP: 5.4.0
 Stable tag: trunk
 License: GPLv2 or later
@@ -30,6 +30,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 3. Use the Settings->Reading screen to set some default settings.
 
 == Changelog ==
+
+= 20221228 =
+* Added selector TOC to place the TOC to a specific CSS selector.
 
 = 20200526 =
 * String replace global

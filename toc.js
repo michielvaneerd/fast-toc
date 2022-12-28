@@ -195,9 +195,12 @@ window.addEventListener("DOMContentLoaded", function() {
         }
 
         var tocHolder = document.getElementById("fast-toc-toc");
+        if (!tocHolder && FAST_TOC.selector_toc) {
+            tocHolder = document.querySelector(FAST_TOC.selector_toc);
+        }
         if (tocHolder) {
             tocHolder.parentNode.replaceChild(fastTocDiv, tocHolder);
-        } else {
+        } else {            
             root.insertBefore(fastTocDiv, root.firstChild);
         }
 
