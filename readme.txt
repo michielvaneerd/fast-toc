@@ -31,6 +31,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 
 == Changelog ==
 
+= 20221229 =
+* Flex display for up arrow.
+
 = 20221228 =
 * Added selector TOC to place the TOC to a specific CSS selector.
 

@@ -157,18 +157,22 @@ ol.fast-toc-collapsible li.fast-toc-expanded > ol {
 }
 
 #fast-toc-top-arrow {
-    padding: 2rem;
+    width:3rem;
+    height:3rem;
+    display: flex;
+    line-height: 3rem;
+    justify-content: center;
     background-color: black;
     color: white;
     position: fixed;
     right: 1rem;
     bottom: 1rem;
     cursor: pointer;
-    display: block;
     z-index: 100;
     text-decoration: none;
     font-weight: bold;
     opacity: .6;
+    border-radius: .4rem;
 }
 #fast-toc-top-arrow:hover {
     opacity: 1;

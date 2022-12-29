@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20221228
+Version: 20221229
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,7 +10,7 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20221228');
+define('FAST_TOC_PLUGIN_VERSION', '20221229');
 
 define('FAST_TOC_DEFAULTS', [
     'fast_toc_minimal_header_count' => 5,

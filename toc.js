@@ -226,7 +226,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 }
 
                 if (docEl.scrollTop > winHeight) {
-                    topArrow.style.display = docEl.scrollTop < lastScrollTop ? "block" : "none";
+                    topArrow.style.display = docEl.scrollTop < lastScrollTop ? "flex" : "none";
                     lastScrollTop = docEl.scrollTop;
                     return;
                 }
