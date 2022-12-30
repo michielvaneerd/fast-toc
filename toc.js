@@ -1,9 +1,9 @@
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("DOMContentLoaded", function () {
     if (FAST_TOC && FAST_TOC.show_toc) {
 
         var styleSheet = null;
 
-        var addCSSRule = function(selector, rules) {
+        var addCSSRule = function (selector, rules) {
             if ("insertRule" in styleSheet) {
                 styleSheet.insertRule(selector + "{" + rules + "}", styleSheet.rules.length);
             }
@@ -24,45 +24,45 @@ window.addEventListener("DOMContentLoaded", function() {
             var cssCounterNesting = FAST_TOC.nested_items;
             var cssCounterNestingSeparator = FAST_TOC.item_separator;
             if (FAST_TOC.list_type === "regular") {
-                
-                    if (cssCounterNesting) {
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before",
-                            'content: counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
-                    } else {
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before",
-                            'content: counter(section, ' + cssCounterStyle + ') " ";');
-                    }
+
+                if (cssCounterNesting) {
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before",
+                        'content: counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
                 } else {
-                    if (cssCounterNesting) {
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before",
-                            'content: "\\00a0\\00a0" counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before",
-                            'content: "+ " counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before",
-                            'content: "- " counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
-                    } else {
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before",
-                            'content: "\\00a0\\00a0" counter(section, ' + cssCounterStyle + ') " ";');
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before",
-                            'content: "+ " counter(section, ' + cssCounterStyle + ') " ";');
-                        addCSSRule(
-                            "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before",
-                            'content: "- " counter(section, ' + cssCounterStyle + ') " ";');
-                    }
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before",
+                        'content: counter(section, ' + cssCounterStyle + ') " ";');
+                }
+            } else {
+                if (cssCounterNesting) {
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before",
+                        'content: "\\00a0\\00a0" counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before",
+                        'content: "+ " counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before",
+                        'content: "- " counters(section, "' + cssCounterNestingSeparator + '", ' + cssCounterStyle + ') " ";');
+                } else {
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before",
+                        'content: "\\00a0\\00a0" counter(section, ' + cssCounterStyle + ') " ";');
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before",
+                        'content: "+ " counter(section, ' + cssCounterStyle + ') " ";');
+                    addCSSRule(
+                        "ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before",
+                        'content: "- " counter(section, ' + cssCounterStyle + ') " ";');
+                }
             }
         }
-        
+
 
         var fastTocDiv = null;
 
-        FAST_TOC.onListCollapserClick = function(e) {
+        FAST_TOC.onListCollapserClick = function (e) {
             e.preventDefault();
             var el = e.target;
             if (fastTocDiv.classList.contains("fast-toc-collapsed")) {
@@ -77,7 +77,7 @@ window.addEventListener("DOMContentLoaded", function() {
         var root = FAST_TOC.selector_root ? document.querySelector(FAST_TOC.selector_root) : document.getElementById("fast-toc-wrapper");
 
         if (FAST_TOC.selector_ignore) {
-            root.querySelectorAll(FAST_TOC.selector_ignore).forEach(function(h) {
+            root.querySelectorAll(FAST_TOC.selector_ignore).forEach(function (h) {
                 h.setAttribute("data-fast-toc-ignore", "true");
             });
         }
@@ -106,7 +106,7 @@ window.addEventListener("DOMContentLoaded", function() {
             listClassName.push("fast-toc-collapsible");
             listClickHandler = "onclick='FAST_TOC.onListItemClick(event);' onkeypress='FAST_TOC.onListItemClick(event);'";
 
-            FAST_TOC.onListItemClick = function(e) {
+            FAST_TOC.onListItemClick = function (e) {
                 if (e.target.nodeName.toLowerCase() === "li") {
                     e.preventDefault();
                     var li = e.target;
@@ -129,9 +129,9 @@ window.addEventListener("DOMContentLoaded", function() {
         // Make nested list, only works for correct hierarchy of headers
 
         var ids = {};
-        
-        headers.forEach(function(h, index) {
-            
+
+        headers.forEach(function (h, index) {
+
             if (h.getAttribute('data-fast-toc-ignore')) return;
 
             var level = parseInt(h.nodeName.substr(1), 10);
@@ -171,12 +171,12 @@ window.addEventListener("DOMContentLoaded", function() {
             }
 
             list.push("<li><a href='#" + id + "'>" + h.innerText + "</a>");
-            
+
             hCounter += 1;
         });
 
         list.push("</ol>");
-        
+
         if (hCounter === 0 || FAST_TOC.minimal_header_count && FAST_TOC.minimal_header_count > hCounter) {
             return;
         }
@@ -200,7 +200,7 @@ window.addEventListener("DOMContentLoaded", function() {
         }
         if (tocHolder) {
             tocHolder.parentNode.replaceChild(fastTocDiv, tocHolder);
-        } else {            
+        } else {
             root.insertBefore(fastTocDiv, root.firstChild);
         }
 
@@ -234,6 +234,25 @@ window.addEventListener("DOMContentLoaded", function() {
             }
 
             handleScroll();
+        }
+
+        if ("IntersectionObserver" in window) {
+            const scrollHandler = entries =>
+                entries.forEach(entry => {
+                    const section = entry.target;
+                    const sectionId = section.id;
+                    const sectionLink = document.querySelector(`a[href="#${sectionId}"]`);
+
+                    if (entry.intersectionRatio > 0) {
+                        section.classList.add("my-visible");
+                        sectionLink.classList.add("my-visible");
+                    } else {
+                        section.classList.remove("my-visible");
+                        sectionLink.classList.remove("my-visible");
+                    }
+                });
+            const observer = new IntersectionObserver(scrollHandler);
+            headers.forEach(header => observer.observe(header));
         }
 
     }

@@ -1,6 +1,6 @@
 .fast-toc {
     padding: 1em;
-    margin: 0 0 1em 0;
+    margin: 0 0 1rem 0;
     background-color: white;
     position: relative;
     overflow: auto;
@@ -11,7 +11,7 @@
 }
 
 .fast-toc-title {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 .fast-toc.fast-toc-collapsed .fast-toc-title {
@@ -30,29 +30,27 @@
 }
 
 .fast-toc ol.fast-toc-root-list li ol {
-    /* 2em when right alining numbers */
-    /* margin-left: 2em; */
-    margin-left: 1em;
+    margin-left: 1.5rem;
 }
 
 .fast-toc ol.fast-toc-root-list li.fast-toc-1 {
-    margin-left: 1em;
+    margin-left: 1.5rem;
 }
 
 .fast-toc ol.fast-toc-root-list li.fast-toc-2 {
-    margin-left: 2em;
+    margin-left: 2.5rem;
 }
 
 .fast-toc ol.fast-toc-root-list li.fast-toc-3 {
-    margin-left: 3em;
+    margin-left: 3.5rem;
 }
 
 .fast-toc ol.fast-toc-root-list li.fast-toc-4 {
-    margin-left: 4em;
+    margin-left: 4.5rem;
 }
 
 .fast-toc ol.fast-toc-root-list li.fast-toc-5 {
-    margin-left: 5em;
+    margin-left: 5.5rem;
 }
 
 ol.fast-toc-show-counter, ol.fast-toc-show-counter ol {
@@ -146,8 +144,8 @@ ol.fast-toc-collapsible li.fast-toc-expanded > ol {
 
 .fast-toc-list-collapser {
     float: right;
-    right: 1em;
-    top: 1em;
+    right: 1rem;
+    top: 1rem;
     cursor: pointer;
     font-family: monospace;
 }

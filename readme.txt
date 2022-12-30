@@ -31,6 +31,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 
 == Changelog ==
 
+= 20221230 =
+* Highlight current item.
+
 = 20221229 =
 * Flex display for up arrow.
 

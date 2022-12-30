@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20221229
+Version: 20221230
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,7 +10,7 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20221229');
+define('FAST_TOC_PLUGIN_VERSION', '20221230');
 
 define('FAST_TOC_DEFAULTS', [
     'fast_toc_minimal_header_count' => 5,
@@ -194,7 +194,7 @@ add_action('admin_init', function () {
                         $setting = fast_toc_get_option('fast_toc_selector_toc');
         ?>
             <input id="fast_toc_selector_toc" type="text" name="fast_toc_selector_toc" value="<?php echo isset($setting) ? esc_attr($setting) : ''; ?>">
-            <p class="description">CSS selector of the element that the TOC will be attached to. If you leave this blank, the TOC will be placed at the top of the page OR on the place with the shortcode.</p>
+            <p class="description">CSS selector of the element that the TOC will be attached to. If you leave this blank, the TOC will be placed at the top of the page OR in the place with the shortcode.</p>
         <?php
                     },
                     'reading',
