@@ -242,13 +242,14 @@ window.addEventListener("DOMContentLoaded", function () {
                     const section = entry.target;
                     const sectionId = section.id;
                     const sectionLink = document.querySelector(`a[href="#${sectionId}"]`);
-
-                    if (entry.intersectionRatio > 0) {
-                        section.classList.add("my-visible");
-                        sectionLink.classList.add("my-visible");
-                    } else {
-                        section.classList.remove("my-visible");
-                        sectionLink.classList.remove("my-visible");
+                    if (sectionLink) {
+                        if (entry.intersectionRatio > 0) {
+                            section.classList.add("my-visible");
+                            sectionLink.classList.add("my-visible");
+                        } else {
+                            section.classList.remove("my-visible");
+                            sectionLink.classList.remove("my-visible");
+                        }
                     }
                 });
             const observer = new IntersectionObserver(scrollHandler);
