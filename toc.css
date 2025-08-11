@@ -1,0 +1,177 @@
+.fast-toc {
+    padding: 1em;
+    margin: 0 0 1rem 0;
+    background-color: white;
+    position: relative;
+    overflow: auto;
+}
+
+.fast-toc a {
+    text-decoration: none;
+}
+
+.fast-toc-title {
+    margin-bottom: 1rem;
+}
+
+.fast-toc.fast-toc-collapsed .fast-toc-title {
+    margin-bottom: 0;
+}
+
+.fast-toc ol.fast-toc-root-list, .fast-toc ol.fast-toc-root-list ol {
+    padding:0;
+    margin:0;
+    list-style-type: none;
+}
+
+.fast-toc ol.fast-toc-root-list li {
+    padding: 0;
+    margin: 0;
+}
+
+.fast-toc ol.fast-toc-root-list li ol {
+    margin-left: 1.5rem;
+}
+
+.fast-toc ol.fast-toc-root-list li.fast-toc-1 {
+    margin-left: 1.5rem;
+}
+
+.fast-toc ol.fast-toc-root-list li.fast-toc-2 {
+    margin-left: 2.5rem;
+}
+
+.fast-toc ol.fast-toc-root-list li.fast-toc-3 {
+    margin-left: 3.5rem;
+}
+
+.fast-toc ol.fast-toc-root-list li.fast-toc-4 {
+    margin-left: 4.5rem;
+}
+
+.fast-toc ol.fast-toc-root-list li.fast-toc-5 {
+    margin-left: 5.5rem;
+}
+
+ol.fast-toc-show-counter, ol.fast-toc-show-counter ol {
+    counter-reset: section 0; /* 0 = start counter; if I make an option of it, I can set it directly in the HTML in the JS file. */
+    list-style-type: none;
+}
+
+.fast-toc ol.fast-toc-root-list li::before, .fast-toc-list-collapser {
+    color: #6d6d6d;
+}
+  
+ol.fast-toc-show-counter.fast-toc-regular li::before, ol.fast-toc-show-counter.fast-toc-regular ol li::before {
+    counter-increment: section;
+    content: counter(section, decimal-leading-zero) " ";
+    font-family: monospace;
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 80px;
+    padding-right: 10px;
+    */
+}
+
+ol.fast-toc-collapsible li::before, ol.fast-toc-collapsible ol li::before {
+    content: "\00a0\00a0";
+    font-family: monospace;
+}
+
+
+ol.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-collapsible ol li.fast-toc-has-child-list::before {
+    content: "+ ";
+    font-family: monospace;
+    cursor: pointer;
+}
+
+ol.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before {
+    content: "- ";
+    font-family: monospace;
+    cursor: pointer;
+}
+
+/* Show numbers and collapsible - without child */
+ol.fast-toc-show-counter.fast-toc-collapsible li::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li::before {
+    counter-increment: section;
+    content: "\00a0\00a0" counter(section, decimal-leading-zero) " ";
+    font-family: monospace;
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 10rem; 
+    padding-right: 10px;
+    */
+}
+
+/* Show numbers and collapsible - with child - collapsed */
+ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list::before {
+    counter-increment: section;
+    content: "+ " counter(section, decimal-leading-zero) " ";
+    font-family: monospace;
+    cursor: pointer;
+    /* Right align number, but you have to set it to a high width if you want to match all use cases... */
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 10rem; 
+    padding-right: 10px;
+    */
+}
+
+/* Show numbers and collapsible - with child - expanded */
+ol.fast-toc-show-counter.fast-toc-collapsible li.fast-toc-has-child-list.fast-toc-expanded::before, ol.fast-toc-show-counter.fast-toc-collapsible ol li.fast-toc-has-child-list.fast-toc-expanded::before {
+    counter-increment: section;
+    content: "- " counter(section, decimal-leading-zero) " ";
+    font-family: monospace;
+    cursor: pointer;
+    /*
+    text-align: right;
+    display: inline-block; 
+    width: 10rem; 
+    padding-right: 10px;
+    */
+}
+
+ol.fast-toc-collapsible li > ol {
+    display: none;
+}
+
+ol.fast-toc-collapsible li.fast-toc-expanded > ol {
+    display: block;
+}
+
+.fast-toc-list-collapser {
+    float: right;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+.fast-toc.fast-toc-collapsed > ol {
+    display: none;
+}
+
+#fast-toc-top-arrow {
+    width:3rem;
+    height:3rem;
+    display: flex;
+    line-height: 3rem;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    cursor: pointer;
+    z-index: 100;
+    text-decoration: none;
+    font-weight: bold;
+    opacity: .6;
+    border-radius: .4rem;
+}
+#fast-toc-top-arrow:hover {
+    opacity: 1;
+}
