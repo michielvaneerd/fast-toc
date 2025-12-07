@@ -2,7 +2,7 @@
 /*
 Plugin Name: Fast TOC
 Description: Display a table of contents
-Version: 20221230
+Version: 20251207
 Author: Michiel van Eerd
 Author URI: https://www.michielvaneerd.nl/
 Requires at least: 5
@@ -10,7 +10,7 @@ Requires PHP: 5.4.0
 License: GPL2
 */
 
-define('FAST_TOC_PLUGIN_VERSION', '20221230');
+define('FAST_TOC_PLUGIN_VERSION', '20251207');
 
 define('FAST_TOC_DEFAULTS', [
     'fast_toc_minimal_header_count' => 5,
@@ -36,6 +36,9 @@ add_action('wp_enqueue_scripts', function () {
         if (in_array(get_post_type(), fast_toc_get_option('fast_toc_post_types'))) {
             wp_enqueue_script('fast_toc', plugin_dir_url(__FILE__) . 'toc.js', [], FAST_TOC_PLUGIN_VERSION);
             $showToc = get_post_meta(get_the_ID(), 'fast_toc_show_toc', true);
+            if ($showToc === '') {
+                $showToc = false;
+            }
             $jsVar = [
                 'show_toc' => $showToc !== '' ? ($showToc === 'true' ? true : false) : (fast_toc_get_option('fast_toc_enabled_default') == 1 ? true : false),
                 'title' => fast_toc_get_option('fast_toc_title'),
@@ -126,8 +129,7 @@ add_action('admin_init', function () {
         add_settings_section(
             'fast_toc_settings_section',
             'Fast TOC settings',
-            function () {
-            },
+            function () {},
             'reading'
         );
 
@@ -251,12 +253,14 @@ add_action('admin_init', function () {
         ?>
             <fieldset>
                 <?php
-                        foreach ([
-                            ['regular', 'Not collapsible'],
-                            ['collapsible_collapsed', 'Collapsible items - by default items are collapsed'],
-                            ['collapsible_expanded', 'Collapsible items - by default items are expanded'],
-                            //['flat', 'Flat', 'Use this option if the hierarchy of the headers is incorrect.']
-                        ] as $item) {
+                        foreach (
+                            [
+                                ['regular', 'Not collapsible'],
+                                ['collapsible_collapsed', 'Collapsible items - by default items are collapsed'],
+                                ['collapsible_expanded', 'Collapsible items - by default items are expanded'],
+                                //['flat', 'Flat', 'Use this option if the hierarchy of the headers is incorrect.']
+                            ] as $item
+                        ) {
                 ?>
                     <p>
                         <label>
@@ -289,11 +293,13 @@ add_action('admin_init', function () {
         ?>
             <fieldset>
                 <?php
-                        foreach ([
-                            ['not_collapsible', 'Not collapsible'],
-                            ['collapsible_collapsed', 'Collapsible TOC - by default TOC is collapsed'],
-                            ['collapsible_expanded', 'Collapsible TOC - by default TOC is expanded']
-                        ] as $item) {
+                        foreach (
+                            [
+                                ['not_collapsible', 'Not collapsible'],
+                                ['collapsible_collapsed', 'Collapsible TOC - by default TOC is collapsed'],
+                                ['collapsible_expanded', 'Collapsible TOC - by default TOC is expanded']
+                            ] as $item
+                        ) {
                 ?>
                     <p>
                         <label>

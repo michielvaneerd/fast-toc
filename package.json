@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "wp-scripts start"
+    "start": "wp-scripts start",
+    "build": "wp-scripts build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@wordpress/scripts": "^20.0.2"
+    "@wordpress/scripts": "^31.1.0"
   }
 }

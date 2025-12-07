@@ -2,7 +2,7 @@
 Contributors: michielve
 Tags: toc, table of contents
 Requires at least: 5
-Tested up to: 6.3.1
+Tested up to: 6.9
 Requires PHP: 5.4.0
 Stable tag: trunk
 License: GPLv2 or later
@@ -30,6 +30,9 @@ This plugin displays a table of contents for the selected post types. See [the d
 3. Use the Settings->Reading screen to set some default settings.
 
 == Changelog ==
+
+= 20251207 =
+* Make it work with Wordpress 6.9
 
 = 20221230 =
 * Highlight current item.
