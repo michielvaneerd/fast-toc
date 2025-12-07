@@ -25,7 +25,7 @@ const PluginDocumentSettingPanelDemo = () => {
     return <PluginDocumentSettingPanel
         name="fast-toc"
         title="Fast TOC">
-        <CheckboxControl label="Enable Fast TOC" onChange={onTocChange} checked={showToc} />
+        <CheckboxControl __nextHasNoMarginBottom={true} label="Enable Fast TOC" onChange={onTocChange} checked={showToc} />
     </PluginDocumentSettingPanel>;
 };
 
