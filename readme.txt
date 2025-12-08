@@ -1,7 +1,7 @@
 === Fast TOC ===
 Contributors: michielve
 Tags: toc, table of contents
-Requires at least: 5
+Requires at least: 4.6
 Tested up to: 6.9
 Requires PHP: 5.4.0
 Stable tag: trunk
